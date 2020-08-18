@@ -11,7 +11,13 @@ pip install selenium
 ```
 python main.py
 ```
-
+#### 4. 입력값
+```
+stu_no: 학번
+pw: 오아시스 비밀번호
+grade: 학년
+index: 과목 인덱스(맨 위부터 0으로 시작)
+```
 ## Troubleshooting
 Windows에서 Chrome Driver가 인식되지 않을 경우 macro.py의 11번째 줄을
 ```
