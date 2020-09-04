@@ -6,6 +6,7 @@
 #### 2. selenium 설치
 ```
 pip install selenium
+pip install bs4
 ```
 #### 3. 실행
 ```
