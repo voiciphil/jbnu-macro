@@ -78,7 +78,7 @@ class Macro:
             sugang = self.driver.find_element_by_xpath(sugang_xpath)
             sugang.click()
             sleep(0.5)
-            self.inputCode()
+            # self.inputCode()
 
         except ElementNotInteractableException:
             ok_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_COM_ALERT_form_btn_closeTextBoxElement"]'
@@ -87,7 +87,7 @@ class Macro:
             login.click()
             sugang = self.driver.find_element_by_xpath(sugang_xpath)
             sugang.click()
-            self.inputCode()
+            # self.inputCode()
 
         spinner1_xpath = '//*[@id="mainframe_VFrameSet_WorkFrame_form_div_work_div_search_cbo_shyr"]/div'
         spinner1 = self.driver.find_element_by_xpath(spinner1_xpath)

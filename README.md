@@ -5,8 +5,7 @@
 자신의 Chrome과 동일한 버전을 다운받고 프로젝트 폴더에 넣는다.
 #### 2. 라이브러리 설치
 ```
-pip install selenium
-pip install bs4
+pip install -r requirements.txt
 ```
 #### 3. 실행
 ```
