@@ -113,7 +113,7 @@ class Macro:
             current = self.driver.find_element_by_id(current_id)
             total = self.driver.find_element_by_id(total_id)
             cnt += 1
-            if cnt == 150:
+            if cnt == 500:
                 self.driver.quit()
                 return True
 
