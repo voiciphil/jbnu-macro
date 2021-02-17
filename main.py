@@ -11,5 +11,5 @@ while flag:
     try:
         flag = macro.run()
     except:
-        macro.driver.close()
+        macro.close_browser()
         flag = True
