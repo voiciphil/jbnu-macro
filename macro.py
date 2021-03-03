@@ -98,7 +98,7 @@ class Macro:
         current = self.__driver.find_element_by_id(current_id)
         total = self.__driver.find_element_by_id(total_id)
 
-        return total.text - current.text
+        return int(total.text) - int(current.text)
 
     def __refresh(self, spinner1, spinner2):
         spinner1.click()
