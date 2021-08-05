@@ -2,10 +2,10 @@ import argparse
 from macro import Macro
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-n', type=str, help='학번')
-parser.add_argument('-p', type=str, help='비밀번호')
-parser.add_argument('-g', type=int, help='학년')
-parser.add_argument('-i', type=int, help='과목 인덱스')
+parser.add_argument('-n', type=str, help='학번', required=True)
+parser.add_argument('-p', type=str, help='비밀번호', required=True)
+parser.add_argument('-g', type=int, help='학년', required=True)
+parser.add_argument('-i', type=int, help='과목 인덱스', required=True)
 
 args = parser.parse_args()
 stu_no = args.n
