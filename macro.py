@@ -15,31 +15,22 @@ class Macro:
         self.__pw = pw
         self.__LOOP_CNT = 500
 
+    def run(self):
+        self.__open_browser()
+        self.__login()
+        self.__enter_registration_page()
+
+        if self.__has_remaining_seat():
+            self.__register()
+            return False
+        else:
+            self.close_browser()
+            return True
+
     def __open_browser(self):
         self.__driver.implicitly_wait(3)
         self.__driver.get('http://all.jbnu.ac.kr/jbnu/sugang/')
         self.__driver.maximize_window()
-
-    def __get_code(self):
-        html = self.__driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
-        divs = soup.find('div',
-                         {'id': 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_div_pattern_sta_codeTextBoxElement'})
-        return divs.div.text
-
-    def __input_code(self):
-        code_id = 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_Edit00_input'
-        code_okay_id = 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_btnOKTextBoxElement'
-        final_okay_id = 'mainframe_VFrameSet_TopFrame_COM_ALERT_form_Static00'
-        code = self.__driver.find_element_by_id(code_id)
-        code.click()
-        code.send_keys(self.__get_code())
-        sleep(0.5)
-        okay = self.__driver.find_element_by_id(code_okay_id)
-        okay.click()
-        sleep(0.5)
-        self.__driver.find_element_by_id(final_okay_id).click()
-        sleep(0.3)
 
     def __login(self):
         stu_no_id = 'mainframe_VFrameSet_LoginFrame_form_div_login_div_form_edt_hakbun_input'
@@ -75,6 +66,38 @@ class Macro:
         finally:
             # self.input_code()
             pass
+
+    def __input_code(self):
+        code_id = 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_Edit00_input'
+        code_okay_id = 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_btnOKTextBoxElement'
+        final_okay_id = 'mainframe_VFrameSet_TopFrame_COM_ALERT_form_Static00'
+        code = self.__driver.find_element_by_id(code_id)
+        code.click()
+        code.send_keys(self.__get_code())
+        sleep(0.5)
+        okay = self.__driver.find_element_by_id(code_okay_id)
+        okay.click()
+        sleep(0.5)
+        self.__driver.find_element_by_id(final_okay_id).click()
+        sleep(0.3)
+
+    def __get_code(self):
+        html = self.__driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+        divs = soup.find('div',
+                         {'id': 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_div_pattern_sta_codeTextBoxElement'})
+        return divs.div.text
+
+    def __has_remaining_seat(self):
+        spinner1, spinner2 = self.__set_spinner()
+
+        for i in range(self.__LOOP_CNT):
+            if self.__get_remaining_seat() > 0:
+                return True
+            self.__refresh(spinner1, spinner2)
+            sleep(0.5)
+
+        return False
 
     def __set_spinner(self):
         spinner1_xpath = '//*[@id="mainframe_VFrameSet_WorkFrame_form_div_work_div_search_cbo_shyr"]/div'
@@ -114,28 +137,5 @@ class Macro:
         btn = self.__driver.find_element_by_id(btn_id)
         btn.click()
 
-    def __has_remaining_seat(self):
-        spinner1, spinner2 = self.__set_spinner()
-
-        for i in range(self.__LOOP_CNT):
-            if self.__get_remaining_seat() > 0:
-                return True
-            self.__refresh(spinner1, spinner2)
-            sleep(0.5)
-
-        return False
-
     def close_browser(self):
         self.__driver.quit()
-
-    def run(self):
-        self.__open_browser()
-        self.__login()
-        self.__enter_registration_page()
-
-        if self.__has_remaining_seat():
-            self.__register()
-            return False
-        else:
-            self.close_browser()
-            return True
