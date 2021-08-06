@@ -35,7 +35,7 @@ class Macro:
     # 유효성 검증
     # 전공 선택, grade 없으면 오류
     def __is_valid_params(self):
-        if self.__is_regist_major():
+        if self.__is_register_major():
             if not self.__grade:
                 return False
 
@@ -106,7 +106,7 @@ class Macro:
         return divs.div.text
 
     # 전공 신청 여부 함수
-    def __is_regist_major(self):
+    def __is_register_major(self):
         return self.__method == 0
 
     def __has_remaining_seat(self):
@@ -122,9 +122,9 @@ class Macro:
         return False
 
     def __set_spinner(self):
-        if self.__is_regist_major():
+        if self.__is_register_major():
             return self.__set_spinner_major()
-        if not self.__is_regist_major():
+        if not self.__is_register_major():
             return self.__set_spinner_basket()
 
     # 전공 신청할 때 spinner
@@ -168,9 +168,9 @@ class Macro:
 
     # method에 따른 refresh를 내부에서 다르게 실행
     def __refresh(self, spinner1, spinner2):
-        if self.__is_regist_major():
+        if self.__is_register_major():
             self.__refresh_major(spinner1, spinner2)
-        if not self.__is_regist_major():
+        if not self.__is_register_major():
             self.__refresh_basket(basket_btn=spinner1, other_btn=spinner2)
 
     def __refresh_major(self, spinner1, spinner2):
