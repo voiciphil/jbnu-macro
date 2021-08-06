@@ -6,15 +6,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotInteractableException
 
 
-class Macro:
-    def __init__(self, stu_no, pw, grade, index, major):
+class MajorMacro:
+    def __init__(self, stu_no, pw, grade, index):
         self.__driver = webdriver.Chrome(os.path.join(os.getcwd(), 'chromedriver'))
         self.__grade = grade
         self.__index = index
         self.__stu_no = stu_no
         self.__pw = pw
         self.__LOOP_CNT = 500
-        self.__major = major
 
     def run(self):
         self.__open_browser()
@@ -92,12 +91,7 @@ class Macro:
                          {'id': 'mainframe_VFrameSet_TopFrame_COM_CHECK_form_div_pattern_sta_codeTextBoxElement'})
         return divs.div.text
 
-    # 전공 신청 여부 함수
-    def __is_register_major(self):
-        return self.__major
-
     def __has_remaining_seat(self):
-        # 전공 / 장바구니 신청에 맞는 spinner
         spinner1, spinner2 = self.__set_spinner()
 
         for _ in range(self.__LOOP_CNT):
@@ -109,13 +103,6 @@ class Macro:
         return False
 
     def __set_spinner(self):
-        if self.__is_register_major():
-            return self.__set_spinner_major()
-        if not self.__is_register_major():
-            return self.__set_spinner_basket()
-
-    # 전공 신청할 때 spinner
-    def __set_spinner_major(self):
         spinner1_xpath = '//*[@id="mainframe_VFrameSet_WorkFrame_form_div_work_div_search_cbo_shyr"]/div'
         spinner1 = self.__driver.find_element_by_xpath(spinner1_xpath)
         spinner1.click()
@@ -128,20 +115,6 @@ class Macro:
 
         return spinner1, spinner2
 
-    # 장바구니 신청할 때 spinner (btns)
-    # 장바구니 신청할 때는 장바구니 btn -> (과목이 적은) 군사학 btn -> 장바구니 btn -> 군사학 -> ... 반복하면서 확인
-    def __set_spinner_basket(self):
-        # spinner1 -> 장바구니 btn
-        basket_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_btn_rsrvCourTextBoxElement'
-        basket_btn = self.__driver.find_element_by_id(basket_id)
-
-        # spinner2 -> 군사학 btn
-        other_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_btn_milTextBoxElement'
-        other_btn = self.__driver.find_element_by_id(other_id)
-
-        basket_btn.click()
-        return basket_btn, other_btn
-
     def __get_remaining_seat(self):
         current_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
                      '_cell_' + str(self.__index) + '_7GridCellTextSimpleContainerElement'
@@ -153,26 +126,13 @@ class Macro:
 
         return int(total.text) - int(current.text)
 
-    # 신청 방법에 따라 refresh를 내부에서 다르게 실행
     def __refresh(self, spinner1, spinner2):
-        if self.__is_register_major():
-            self.__refresh_major(spinner1, spinner2)
-        if not self.__is_register_major():
-            self.__refresh_basket(basket_btn=spinner1, other_btn=spinner2)
-
-    def __refresh_major(self, spinner1, spinner2):
         spinner1.click()
         spinner2.send_keys(Keys.DOWN)
         spinner2.send_keys(Keys.RETURN)
         spinner1.click()
         spinner2.send_keys(Keys.UP)
         spinner2.send_keys(Keys.RETURN)
-
-    # 장바구니 신청 시 버튼을 번갈아가면서 클릭
-    def __refresh_basket(self, basket_btn, other_btn):
-        other_btn.click()
-        sleep(0.25)
-        basket_btn.click()
 
     def __register(self):
         btn_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
