@@ -7,20 +7,16 @@ from selenium.common.exceptions import ElementNotInteractableException
 
 
 class Macro:
-    def __init__(self, stu_no, pw, grade, index, method):
+    def __init__(self, stu_no, pw, grade, index, major):
         self.__driver = webdriver.Chrome(os.path.join(os.getcwd(), 'chromedriver'))
         self.__grade = grade
         self.__index = index
         self.__stu_no = stu_no
         self.__pw = pw
-        self.__method = method
         self.__LOOP_CNT = 500
+        self.__major = major
 
     def run(self):
-        if not self.__is_valid_params():
-            print("params Error")
-            return False
-
         self.__open_browser()
         self.__login()
         self.__enter_registration_page()
@@ -31,15 +27,6 @@ class Macro:
         else:
             self.close_browser()
             return True
-    
-    # 유효성 검증
-    # 전공 선택, grade 없으면 오류
-    def __is_valid_params(self):
-        if self.__is_register_major():
-            if not self.__grade:
-                return False
-
-        return True
 
     def __open_browser(self):
         self.__driver.implicitly_wait(3)
@@ -107,7 +94,7 @@ class Macro:
 
     # 전공 신청 여부 함수
     def __is_register_major(self):
-        return self.__method == 0
+        return self.__major
 
     def __has_remaining_seat(self):
         # 전공 / 장바구니 신청에 맞는 spinner
@@ -166,7 +153,7 @@ class Macro:
 
         return int(total.text) - int(current.text)
 
-    # method에 따른 refresh를 내부에서 다르게 실행
+    # 신청 방법에 따라 refresh를 내부에서 다르게 실행
     def __refresh(self, spinner1, spinner2):
         if self.__is_register_major():
             self.__refresh_major(spinner1, spinner2)

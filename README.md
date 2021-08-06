@@ -12,10 +12,10 @@ pip install -r requirements.txt
 #### 3. 실행
 ```
 # 전공 신청
-python main.py -n [학번] -p [비밀번호] -g [학년] -i [과목 인덱스 (맨 위에서 0부터 시작)] -m 0
+python main.py -n [학번] -p [비밀번호] -i [과목 인덱스 (맨 위에서 0부터 시작)] -g [학년] -m
 
 # 장바구니 신청
-python main.py -n [학번] -p [비밀번호] -i [과목 인덱스 (맨 위에서 0부터 시작)] -m 1
+python main.py -n [학번] -p [비밀번호] -i [과목 인덱스 (맨 위에서 0부터 시작)]
 ```
 
 ## Troubleshooting
