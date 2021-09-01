@@ -14,6 +14,8 @@ def get_argument_parser():
 
 def is_not_valid_args(args):
     if not args.m and not args.g:
+        return False
+    if not args.m or not args.g:
         return True
     return False
 
