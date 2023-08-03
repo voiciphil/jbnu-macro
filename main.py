@@ -14,7 +14,6 @@ def create_macro(args):
     stu_no = args.n
     pw = args.p
     index = args.i
-    grade = args.g
     return BasketMacro(stu_no, pw, index)
 
 if __name__ == '__main__':
