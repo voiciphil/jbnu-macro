@@ -15,16 +15,22 @@ class BasketMacro:
         self.__LOOP_CNT = 500
 
     def run(self):
-        self.__open_browser()
-        self.__login()
-        self.__enter_registration_page()
+        try:
+            self.__open_browser()
+            self.__login()
+            self.__enter_registration_page()
 
-        if self.__has_remaining_seat():
-            self.__register()
+            if self.__has_remaining_seat():
+                self.__register()
+                return False
+            else:
+                return True
+        except Exception as e:
+            print("An error occurred:", e)
             return False
-        else:
-            self.close_browser()
-            return True
+        finally:
+            # self.close_browser()
+            pass
 
     def __open_browser(self):
         self.__driver.implicitly_wait(3)
@@ -37,7 +43,7 @@ class BasketMacro:
         stu_no = self.__driver.find_element_by_id(stu_no_id)
         pw = self.__driver.find_element_by_id(pw_id)
 
-        login_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_form_div_login_div_form_btn_login"]/div'
+        login_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_form_div_login_div_form_btn_login"]'
         login = self.__driver.find_element_by_xpath(login_xpath)
 
         try:
@@ -50,17 +56,16 @@ class BasketMacro:
             return True
 
     def __enter_registration_page(self):
-        sugang_xpath = '//*[@id="mainframe_VFrameSet_TopFrame_form_div_top_mnu_topmenu_0001TextBoxElement"]/div'
-
+        sugang_xpath = '//*[@id="mainframe_VFrameSet_TopFrame_form_div_top_mnu_topmenu_0001TextBoxElement"]'
         try:
             sleep(0.5)
             sugang = self.__driver.find_element_by_xpath(sugang_xpath)
             sugang.click()
         except ElementNotInteractableException:
-            ok_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_COM_ALERT_form_btn_closeTextBoxElement"]'
+            ok_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_COM_ALERT_form_btn_close"]'
             ok = self.__driver.find_element_by_xpath(ok_xpath)
             ok.click()
-            login_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_form_div_login_div_form_btn_login"]/div'
+            login_xpath = '//*[@id="mainframe_VFrameSet_LoginFrame_form_div_login_div_form_btn_login"]'
             login = self.__driver.find_element_by_xpath(login_xpath)
             login.click()
             sugang = self.__driver.find_element_by_xpath(sugang_xpath)
@@ -123,7 +128,7 @@ class BasketMacro:
 
         current = self.__driver.find_element_by_id(current_id)
         total = self.__driver.find_element_by_id(total_id)
-
+        
         return int(total.text) - int(current.text)
 
     def __refresh(self, basket_btn, other_btn):
