@@ -117,9 +117,9 @@ class BasketMacro:
 
     def __get_remaining_seat(self):
         current_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
-                     '_cell_' + str(self.__index) + '_7GridCellTextSimpleContainerElement'
+                     '_cell_' + str(self.__index) + '_8GridCellTextSimpleContainerElement'
         total_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
-                   '_cell_' + str(self.__index) + '_8GridCellTextSimpleContainerElement'
+                   '_cell_' + str(self.__index) + '_9GridCellTextSimpleContainerElement'
 
         current = self.__driver.find_element_by_id(current_id)
         total = self.__driver.find_element_by_id(total_id)
