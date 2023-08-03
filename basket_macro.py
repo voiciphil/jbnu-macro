@@ -29,7 +29,6 @@ class BasketMacro:
             print("An error occurred:", e)
             return False
         finally:
-            # self.close_browser()
             pass
 
     def __open_browser(self):
