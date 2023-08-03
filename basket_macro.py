@@ -22,7 +22,6 @@ class BasketMacro:
 
             if self.__has_remaining_seat():
                 self.__register()
-                self.__register()
                 return False
             else:
                 return True
@@ -30,7 +29,8 @@ class BasketMacro:
             print("An error occurred:", e)
             return False
         finally:
-            self.close_browser()
+            # self.close_browser()
+            pass
 
     def __open_browser(self):
         self.__driver.implicitly_wait(3)
