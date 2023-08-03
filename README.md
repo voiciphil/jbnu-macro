@@ -11,10 +11,6 @@ pip install -r requirements.txt
 ```
 #### 3. 실행
 ```
-# 전공 신청
-python main.py -n [학번] -p [비밀번호] -i [과목 인덱스 (맨 위에서 0부터 시작)] -g [학년] -m
-
-# 장바구니 신청
 python main.py -n [학번] -p [비밀번호] -i [과목 인덱스 (맨 위에서 0부터 시작)]
 ```
 
@@ -24,3 +20,6 @@ Windows에서 Chrome Driver가 인식되지 않을 경우 macro.py의 11번째 �
 self.__driver = webdriver.Chrome('chromedriver.exe')
 ```
 로 바꿔본다.
+
+## Update
+- 전공 신청 옵션 삭제 (2023-08-03)
