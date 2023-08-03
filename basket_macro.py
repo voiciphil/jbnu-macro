@@ -22,20 +22,6 @@ class BasketMacro:
 
             if self.__has_remaining_seat():
                 self.__register()
-                print("Congraturation!")
-                current_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
-                     '_cell_' + str(self.__index) + '_8GridCellTextSimpleContainerElement'
-                total_id = 'mainframe_VFrameSet_WorkFrame_form_div_work_grd_gwam_body_gridrow_' + str(self.__index) + \
-                        '_cell_' + str(self.__index) + '_9GridCellTextSimpleContainerElement'
-
-                current = self.__driver.find_element_by_id(current_id)
-                total = self.__driver.find_element_by_id(total_id)
-
-                current_text = current.text
-                total_text = total.text
-                
-                print("Current:", current_text)
-                print("Total:", total_text)
                 self.__register()
                 return False
             else:
@@ -142,12 +128,6 @@ class BasketMacro:
 
         current = self.__driver.find_element_by_id(current_id)
         total = self.__driver.find_element_by_id(total_id)
-
-        current_text = current.text
-        total_text = total.text
-        
-        print("Current:", current_text)
-        print("Total:", total_text)
         
         return int(total.text) - int(current.text)
 
